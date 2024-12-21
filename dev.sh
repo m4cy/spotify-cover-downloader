@@ -7,9 +7,8 @@ TOKEN=`curl -X POST "https://accounts.spotify.com/api/token" \
 mkdir covers
 
 ITEMS=`curl --request GET \
-  --url https://api.spotify.com/v1/playlists/4VkUgiKioP7uJFOUj7ixiR/tracks \
+  --url https://api.spotify.com/v1/playlists/<your playlist id>/tracks \
   --header "Authorization: Bearer ${TOKEN}" | jq '[.items[].track.album.images[0].url]'`
-
 INDEX=0
 
 echo "$ITEMS" | jq -r '.[]' | while read -r song; do curl $song -o covers/$INDEX.png; ((INDEX++)); done
